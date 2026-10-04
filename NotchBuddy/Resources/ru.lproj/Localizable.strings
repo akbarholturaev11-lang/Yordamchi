@@ -1,0 +1,88 @@
+/* Russian localization — UI text only. */
+
+"General" = "Основные";
+"Active pills" = "Активные виджеты";
+"Agents" = "Агенты";
+"Chat" = "Чат";
+"Integrations" = "Интеграции";
+"Shortcuts" = "Сочетания клавиш";
+
+"Sound" = "Звук";
+"Enable sounds" = "Включить звуки";
+"Volume" = "Громкость";
+"Behavior" = "Поведение";
+"Close after" = "Закрывать через";
+"s inactive" = "с бездействия";
+"Hide after" = "Скрывать через";
+"min without movement" = "мин без движения";
+"Hotkey" = "Горячая клавиша";
+"Show island with shortcut" = "Показывать остров сочетанием клавиш";
+"Shortcut" = "Сочетание";
+"presses this → island opens" = "нажатие → открывает остров";
+"Startup" = "Автозапуск";
+"Launch at Mac startup" = "Запускать при старте Mac";
+
+"Choose the tools you use. Coucou only shows what you declare here." = "Выберите используемые инструменты. Coucou показывает только выбранные здесь.";
+"Main" = "Основной";
+
+"Claude Code Hooks" = "Хуки Claude Code";
+"Hooks outdated — update them to answer Claude's questions from the notch" = "Хуки устарели — обновите их, чтобы отвечать на вопросы Claude из выреза";
+"Update hooks" = "Обновить хуки";
+"Install hooks" = "Установить хуки";
+"Uninstall" = "Удалить";
+"Install" = "Установить";
+"Update" = "Обновить";
+"Cancel" = "Отмена";
+"Save" = "Сохранить";
+"Close" = "Закрыть";
+"Done" = "Готово";
+"Allow" = "Разрешить";
+"Deny" = "Запретить";
+"Always allow" = "Всегда разрешать";
+"Ask" = "Спросить";
+"Continue" = "Продолжить";
+"Retry" = "Повторить";
+"Open" = "Открыть";
+"Copy" = "Копировать";
+"Settings" = "Настройки";
+"Quit" = "Выйти";
+
+"Claude" = "Claude";
+"Codex" = "Codex";
+"Cursor" = "Cursor";
+"Gemini" = "Gemini";
+"Model" = "Модель";
+"API key" = "API-ключ";
+"API Key" = "API-ключ";
+"Custom model" = "Своя модель";
+"Provider" = "Провайдер";
+"Connect" = "Подключить";
+"Disconnect" = "Отключить";
+"Connected" = "Подключено";
+"Not connected" = "Не подключено";
+
+"Working" = "Работает";
+"Waiting" = "Ожидание";
+"Completed" = "Завершено";
+"Error" = "Ошибка";
+"Question" = "Вопрос";
+"Approval" = "Разрешение";
+"Approve" = "Разрешить";
+"Reject" = "Отклонить";
+
+"Music" = "Музыка";
+"Calendar" = "Календарь";
+"GitHub" = "GitHub";
+"Notion" = "Notion";
+"Vercel" = "Vercel";
+"Stripe" = "Stripe";
+"Resend" = "Resend";
+
+"Appearance" = "Внешний вид";
+"Notifications" = "Уведомления";
+"About" = "О приложении";
+"Enabled" = "Включено";
+"Disabled" = "Выключено";
+"On" = "Вкл.";
+"Off" = "Выкл.";
+"None" = "Нет";

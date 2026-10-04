@@ -842,7 +842,7 @@ struct SettingsView: View {
     private func pickClaudeFolder(prompt: String) -> URL? {
         let panel = NSOpenPanel()
         panel.message = NSLocalizedString("Select your .claude folder (press ⇧⌘. to show hidden files)", comment: "")
-        panel.prompt = prompt
+        panel.prompt = NSLocalizedString(prompt, comment: "")
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false

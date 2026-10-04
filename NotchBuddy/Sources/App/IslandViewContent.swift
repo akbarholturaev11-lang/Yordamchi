@@ -4518,7 +4518,7 @@ struct PrimaryButton: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 7) {
-                Text(title).font(.system(size: 12.5, weight: .medium))
+                Text(NSLocalizedString(title, comment: "")).font(.system(size: 12.5, weight: .medium))
                 if let k = kbd {
                     Text(k).font(.system(size: 10.5))
                         .padding(.horizontal, 4)
@@ -4547,7 +4547,7 @@ struct SecondaryButton: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 7) {
-                Text(title).font(.system(size: 12.5, weight: .medium))
+                Text(NSLocalizedString(title, comment: "")).font(.system(size: 12.5, weight: .medium))
                 if let k = kbd {
                     Text(k).font(.system(size: 10.5))
                         .padding(.horizontal, 4)

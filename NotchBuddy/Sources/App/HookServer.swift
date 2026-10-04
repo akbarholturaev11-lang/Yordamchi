@@ -1506,7 +1506,7 @@ final class HookServer: @unchecked Sendable {
         let exists = FileManager.default.fileExists(atPath: url.path)
         if !install && !exists {
             throw NSError(domain: "CoucouNoop", code: 0, userInfo: [
-                NSLocalizedDescriptionKey: "No Gemini CLI hooks to remove."
+                NSLocalizedDescriptionKey: NSLocalizedString("No Gemini CLI hooks to remove.", comment: "")
             ])
         }
         let current = exists ? try Data(contentsOf: url) : Data()
@@ -1602,7 +1602,7 @@ final class HookServer: @unchecked Sendable {
         let exists = FileManager.default.fileExists(atPath: url.path)
         if !install && !exists {
             throw NSError(domain: "CoucouNoop", code: 0, userInfo: [
-                NSLocalizedDescriptionKey: "No Antigravity hooks to remove."
+                NSLocalizedDescriptionKey: NSLocalizedString("No Antigravity hooks to remove.", comment: "")
             ])
         }
         let current = exists ? try Data(contentsOf: url) : Data()
@@ -1757,7 +1757,7 @@ final class HookServer: @unchecked Sendable {
         let exists = FileManager.default.fileExists(atPath: url.path)
         if !install && !exists {
             throw NSError(domain: "CoucouNoop", code: 0, userInfo: [
-                NSLocalizedDescriptionKey: "No Codex hooks to remove."
+                NSLocalizedDescriptionKey: NSLocalizedString("No Codex hooks to remove.", comment: "")
             ])
         }
         let current = exists ? try Data(contentsOf: url) : Data()

@@ -235,3 +235,26 @@
 "Open terminal" = "Открыть терминал";
 "OK" = "ОК";
 "Ask a question" = "Задать вопрос";
+
+"❌ Startup: %@" = "❌ Автозапуск: %@";
+"Select your .claude folder (press ⇧⌘. to show hidden files)" = "Выберите папку .claude (нажмите ⇧⌘., чтобы показать скрытые файлы)";
+"Select" = "Выбрать";
+"❌ Select the .claude folder (hidden, in your Home directory)." = "❌ Выберите папку .claude (скрытая папка в домашнем каталоге).";
+"Install Coucou hooks in ~/.claude?" = "Установить хуки Coucou в ~/.claude?";
+"Will write:\n• ~/.claude/coucou/nb-hook\n• ~/.claude/settings.json (backup created first)" = "Будут записаны:\n• ~/.claude/coucou/nb-hook\n• ~/.claude/settings.json (сначала будет создана резервная копия)";
+"No models yet — download one in %@ first." = "Моделей пока нет — сначала загрузите модель в %@.";
+"✓ Connected · %d model" = "✓ Подключено · %d модель";
+"✓ Connected · %d models" = "✓ Подключено · %d моделей";
+"Couldn't reach %@ at %@. Is it running?" = "Не удалось подключиться к %@ по адресу %@. Сервер запущен?";
+"❌ Write error: %@" = "❌ Ошибка записи: %@";
+"✓ Gemini CLI hooks installed in ~/.gemini/settings.json" = "✓ Хуки Gemini CLI установлены в ~/.gemini/settings.json";
+"✓ Gemini CLI hooks removed." = "✓ Хуки Gemini CLI удалены.";
+"✓ Antigravity hooks installed in ~/.gemini/config/hooks.json" = "✓ Хуки Antigravity установлены в ~/.gemini/config/hooks.json";
+"✓ Antigravity hooks removed." = "✓ Хуки Antigravity удалены.";
+"✓ Codex hooks installed — run /hooks in Codex or open Hooks in the app's settings to trust them." = "✓ Хуки Codex установлены — выполните /hooks в Codex или откройте Hooks в настройках приложения, чтобы доверять им.";
+"✓ Codex hooks removed." = "✓ Хуки Codex удалены.";
+"✓ Status line installed." = "✓ Строка состояния установлена.";
+"✓ Status line removed." = "✓ Строка состояния удалена.";
+"No Gemini CLI hooks to remove." = "Нет хуков Gemini CLI для удаления.";
+"No Antigravity hooks to remove." = "Нет хуков Antigravity для удаления.";
+"No Codex hooks to remove." = "Нет хуков Codex для удаления.";

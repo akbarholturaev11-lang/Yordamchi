@@ -146,7 +146,7 @@ struct SettingsView: View {
 
             // Detail panel
             VStack(alignment: .leading, spacing: 0) {
-                Text(sectionTitle)
+                Text(LocalizedStringKey(sectionTitle))
                     .font(.title2)
                     .fontWeight(.semibold)
                     .padding(.horizontal, 20)
@@ -161,7 +161,7 @@ struct SettingsView: View {
                 }
                 if !statusMessage.isEmpty {
                     Divider()
-                    Text(statusMessage)
+                    Text(LocalizedStringKey(statusMessage))
                         .font(.system(size: 12))
                         .foregroundColor(statusMessage.hasPrefix("❌") ? .red : .secondary)
                         .padding(.horizontal, 20)
@@ -320,7 +320,7 @@ struct SettingsView: View {
                     let catPills = PillCatalog.available.filter { $0.category == cat }
                     if !catPills.isEmpty {
                         Divider()
-                        Text(cat.title)
+                        Text(LocalizedStringKey(cat.title))
                             .font(.system(size: 11, weight: .semibold))
                             .foregroundColor(.secondary)
                         ForEach(catPills, id: \.id) { def in
@@ -656,7 +656,7 @@ struct SettingsView: View {
                 if state.ollamaServerURL.isEmpty {
                     TextField("http://127.0.0.1:11434", text: $ollamaURL)
                         .textFieldStyle(.roundedBorder)
-                    Button(connectingOllama ? "Connecting…" : "Connect") {
+                    Button(connectingOllama ? String(localized: "Connecting…") : String(localized: "Connect")) {
                         Task { await connectLocal(provider: .ollama) }
                     }
                     .buttonStyle(.borderedProminent)
@@ -691,7 +691,7 @@ struct SettingsView: View {
                 if state.lmstudioServerURL.isEmpty {
                     TextField("http://127.0.0.1:1234", text: $lmstudioURL)
                         .textFieldStyle(.roundedBorder)
-                    Button(connectingLMStudio ? "Connecting…" : "Connect") {
+                    Button(connectingLMStudio ? String(localized: "Connecting…") : String(localized: "Connect")) {
                         Task { await connectLocal(provider: .lmstudio) }
                     }
                     .buttonStyle(.borderedProminent)
@@ -831,7 +831,7 @@ struct SettingsView: View {
             if on { try SMAppService.mainApp.register() }
             else  { try SMAppService.mainApp.unregister() }
         } catch {
-            statusMessage = "❌ Startup: \(error.localizedDescription)"
+            statusMessage = String(format: NSLocalizedString("❌ Startup: %@", comment: ""), error.localizedDescription)
             launchAtStartup = !on
         }
     }
@@ -841,8 +841,8 @@ struct SettingsView: View {
     #if APPSTORE
     private func pickClaudeFolder(prompt: String) -> URL? {
         let panel = NSOpenPanel()
-        panel.message = "Select your .claude folder (press ⇧⌘. to show hidden files)"
-        panel.prompt = prompt
+        panel.message = NSLocalizedString("Select your .claude folder (press ⇧⌘. to show hidden files)", comment: "")
+        panel.prompt = NSLocalizedString(prompt, comment: "")
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = false
@@ -852,7 +852,7 @@ struct SettingsView: View {
         panel.directoryURL = URL(fileURLWithPath: realHomePath)
         guard panel.runModal() == .OK, let url = panel.url else { return nil }
         guard url.lastPathComponent == ".claude" else {
-            statusMessage = "❌ Select the .claude folder (hidden, in your Home directory)."
+            statusMessage = NSLocalizedString("❌ Select the .claude folder (hidden, in your Home directory).", comment: "")
             return nil
         }
         return url
@@ -861,10 +861,10 @@ struct SettingsView: View {
     private func installHooksAppStore() {
         guard let claudeURL = pickClaudeFolder(prompt: "Select") else { return }
         let alert = NSAlert()
-        alert.messageText = "Install Coucou hooks in ~/.claude?"
-        alert.informativeText = "Will write:\n• ~/.claude/coucou/nb-hook\n• ~/.claude/settings.json (backup created first)"
-        alert.addButton(withTitle: "Install")
-        alert.addButton(withTitle: "Cancel")
+        alert.messageText = NSLocalizedString("Install Coucou hooks in ~/.claude?", comment: "")
+        alert.informativeText = NSLocalizedString("Will write:\n• ~/.claude/coucou/nb-hook\n• ~/.claude/settings.json (backup created first)", comment: "")
+        alert.addButton(withTitle: NSLocalizedString("Install", comment: ""))
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
         alert.alertStyle = .informational
         guard alert.runModal() == .alertFirstButtonReturn else { return }
         do {
@@ -904,7 +904,7 @@ struct SettingsView: View {
         let name = provider == .ollama ? "Ollama" : "LM Studio"
         switch result {
         case .success(let models) where models.isEmpty:
-            statusMessage = "No models yet — download one in \(name) first."
+            statusMessage = String(format: NSLocalizedString("No models yet — download one in %@ first.", comment: ""), name)
         case .success(let models):
             if provider == .ollama {
                 state.ollamaServerURL = normalised
@@ -917,9 +917,11 @@ struct SettingsView: View {
                 state.fetchedProviderModels[.lmstudio] = nil
                 state.providerModelFetchError[.lmstudio] = nil
             }
-            statusMessage = "✓ Connected · \(models.count) model\(models.count == 1 ? "" : "s")"
+            statusMessage = models.count == 1
+                ? String.localizedStringWithFormat(NSLocalizedString("✓ Connected · %d model", comment: ""), models.count)
+                : String.localizedStringWithFormat(NSLocalizedString("✓ Connected · %d models", comment: ""), models.count)
         case .failure:
-            statusMessage = "Couldn't reach \(name) at \(normalised). Is it running?"
+            statusMessage = String(format: NSLocalizedString("Couldn't reach %@ at %@. Is it running?", comment: ""), name, normalised)
         }
     }
 
@@ -941,7 +943,7 @@ struct SettingsView: View {
             pendingHookJSON = ""
             hookNeedsUpdate = false
         } catch {
-            statusMessage = "❌ Write error: \(error.localizedDescription)"
+            statusMessage = String(format: NSLocalizedString("❌ Write error: %@", comment: ""), error.localizedDescription)
         }
     }
 
@@ -975,8 +977,8 @@ struct SettingsView: View {
             pendingGeminiJSON = ""
             geminiHooksInstalled = geminiPendingInstall
             statusMessage = geminiPendingInstall
-                ? "✓ Gemini CLI hooks installed in ~/.gemini/settings.json"
-                : "✓ Gemini CLI hooks removed."
+                ? NSLocalizedString("✓ Gemini CLI hooks installed in ~/.gemini/settings.json", comment: "")
+                : NSLocalizedString("✓ Gemini CLI hooks removed.", comment: "")
         } catch {
             statusMessage = "❌ \(error.localizedDescription)"
         }
@@ -1002,8 +1004,8 @@ struct SettingsView: View {
             pendingAgyJSON = ""
             agyHooksInstalled = agyPendingInstall
             statusMessage = agyPendingInstall
-                ? "✓ Antigravity hooks installed in ~/.gemini/config/hooks.json"
-                : "✓ Antigravity hooks removed."
+                ? NSLocalizedString("✓ Antigravity hooks installed in ~/.gemini/config/hooks.json", comment: "")
+                : NSLocalizedString("✓ Antigravity hooks removed.", comment: "")
         } catch {
             statusMessage = "❌ \(error.localizedDescription)"
         }
@@ -1029,8 +1031,8 @@ struct SettingsView: View {
             pendingCodexJSON = ""
             codexHooksInstalled = codexPendingInstall
             statusMessage = codexPendingInstall
-                ? "✓ Codex hooks installed — run /hooks in Codex or open Hooks in the app's settings to trust them."
-                : "✓ Codex hooks removed."
+                ? NSLocalizedString("✓ Codex hooks installed — run /hooks in Codex or open Hooks in the app's settings to trust them.", comment: "")
+                : NSLocalizedString("✓ Codex hooks removed.", comment: "")
         } catch {
             statusMessage = "❌ \(error.localizedDescription)"
         }
@@ -1072,8 +1074,8 @@ struct SettingsView: View {
                 state.showPlanInNotch = false
             }
             statusMessage = statusLinePendingInstall
-                ? "✓ Status line installed."
-                : "✓ Status line removed."
+                ? NSLocalizedString("✓ Status line installed.", comment: "")
+                : NSLocalizedString("✓ Status line removed.", comment: "")
         } catch {
             planTogglePending = false
             statusMessage = "❌ \(error.localizedDescription)"
@@ -1224,7 +1226,7 @@ struct SettingsView: View {
                     .foregroundColor(.secondary)
             } else {
                 if let h = hint {
-                    Text(h)
+                    Text(LocalizedStringKey(h))
                         .font(.system(size: 11))
                         .foregroundColor(.secondary)
                 }
@@ -1261,7 +1263,7 @@ struct SettingsSidebarRow: View {
 
     var body: some View {
         Label {
-            Text(title)
+            Text(LocalizedStringKey(title))
         } icon: {
             Image(systemName: icon)
                 .font(.system(size: 11, weight: .semibold))
@@ -1284,14 +1286,14 @@ struct IntegrationFilterRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 6) {
-                Text(label)
+                Text(LocalizedStringKey(label))
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)
                 Spacer()
                 if loading {
                     ProgressView().scaleEffect(0.6)
                 } else {
-                    Button(items.isEmpty ? "Load list" : "Refresh") { onLoad() }
+                    Button(items.isEmpty ? String(localized: "Load list") : String(localized: "Refresh")) { onLoad() }
                         .buttonStyle(.bordered)
                         .controlSize(.mini)
                 }
@@ -1355,7 +1357,7 @@ struct ShortcutRecorderButton: View {
                 return nil
             }
         } label: {
-            Text(isRecording ? "Press keys…" : shortcutLabel)
+            Text(isRecording ? String(localized: "Press keys…") : shortcutLabel)
                 .font(.system(size: 11, design: .monospaced))
                 .padding(.horizontal, 8).padding(.vertical, 3)
                 .background(isRecording ? Color.accentColor.opacity(0.12) : Color(NSColor.controlBackgroundColor))

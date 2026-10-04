@@ -929,23 +929,23 @@ final class HookServer: @unchecked Sendable {
 
     private func frenchStep(tool: String, input: [String: Any]) -> String {
         let labels: [String: String] = [
-            "Bash":        "Exécute",
-            "Read":        "Lit",
-            "Write":       "Écrit",
-            "Edit":        "Modifie",
-            "Glob":        "Cherche",
-            "Grep":        "Recherche",
-            "WebSearch":   "Recherche web",
-            "WebFetch":    "Récupère",
-            "TodoWrite":   "Tâches",
-            "Task":        "Agent",
-            "LS":          "Liste",
-            "MultiEdit":   "Modifie",
+            "Bash":        NSLocalizedString("Exécute", comment: ""),
+            "Read":        NSLocalizedString("Lit", comment: ""),
+            "Write":       NSLocalizedString("Écrit", comment: ""),
+            "Edit":        NSLocalizedString("Modifie", comment: ""),
+            "Glob":        NSLocalizedString("Cherche", comment: ""),
+            "Grep":        NSLocalizedString("Recherche", comment: ""),
+            "WebSearch":   NSLocalizedString("Recherche web", comment: ""),
+            "WebFetch":    NSLocalizedString("Récupère", comment: ""),
+            "TodoWrite":   NSLocalizedString("Tâches", comment: ""),
+            "Task":        NSLocalizedString("Agent", comment: ""),
+            "LS":          NSLocalizedString("Liste", comment: ""),
+            "MultiEdit":   NSLocalizedString("Modifie", comment: ""),
             "NotebookEdit": "Notebook",
             // Codex tools
-            "apply_patch": "Modifie",
-            "update_plan": "Tâches",
-            "spawn_agent": "Agent",
+            "apply_patch": NSLocalizedString("Modifie", comment: ""),
+            "update_plan": NSLocalizedString("Tâches", comment: ""),
+            "spawn_agent": NSLocalizedString("Agent", comment: ""),
         ]
         var label = labels[tool] ?? tool
 
@@ -990,15 +990,15 @@ final class HookServer: @unchecked Sendable {
     private func bashVerb(_ command: String) -> String {
         let first = command.split(whereSeparator: { $0.isWhitespace }).first.map(String.init) ?? ""
         switch first {
-        case "cat", "bat", "head", "tail", "less", "more", "nl": return "Lit"
-        case "rg", "grep", "find", "fd", "ls", "tree", "wc":    return "Cherche"
+        case "cat", "bat", "head", "tail", "less", "more", "nl": return NSLocalizedString("Lit", comment: "")
+        case "rg", "grep", "find", "fd", "ls", "tree", "wc":    return NSLocalizedString("Cherche", comment: "")
         default: break
         }
         let testRunners = ["pytest", "vitest", "jest", "npm test", "npm run test",
                            "cargo test", "go test", "swift test", "make test",
                            "xcodebuild test", "unittest"]
-        if testRunners.contains(where: { command.contains($0) }) { return "Teste" }
-        return "Exécute"
+        if testRunners.contains(where: { command.contains($0) }) { return NSLocalizedString("Teste", comment: "") }
+        return NSLocalizedString("Exécute", comment: "")
     }
 
     // MARK: - Live diff helpers
@@ -1506,7 +1506,7 @@ final class HookServer: @unchecked Sendable {
         let exists = FileManager.default.fileExists(atPath: url.path)
         if !install && !exists {
             throw NSError(domain: "CoucouNoop", code: 0, userInfo: [
-                NSLocalizedDescriptionKey: "No Gemini CLI hooks to remove."
+                NSLocalizedDescriptionKey: NSLocalizedString("No Gemini CLI hooks to remove.", comment: "")
             ])
         }
         let current = exists ? try Data(contentsOf: url) : Data()
@@ -1602,7 +1602,7 @@ final class HookServer: @unchecked Sendable {
         let exists = FileManager.default.fileExists(atPath: url.path)
         if !install && !exists {
             throw NSError(domain: "CoucouNoop", code: 0, userInfo: [
-                NSLocalizedDescriptionKey: "No Antigravity hooks to remove."
+                NSLocalizedDescriptionKey: NSLocalizedString("No Antigravity hooks to remove.", comment: "")
             ])
         }
         let current = exists ? try Data(contentsOf: url) : Data()
@@ -1757,7 +1757,7 @@ final class HookServer: @unchecked Sendable {
         let exists = FileManager.default.fileExists(atPath: url.path)
         if !install && !exists {
             throw NSError(domain: "CoucouNoop", code: 0, userInfo: [
-                NSLocalizedDescriptionKey: "No Codex hooks to remove."
+                NSLocalizedDescriptionKey: NSLocalizedString("No Codex hooks to remove.", comment: "")
             ])
         }
         let current = exists ? try Data(contentsOf: url) : Data()

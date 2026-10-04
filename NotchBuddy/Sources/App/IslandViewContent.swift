@@ -1474,9 +1474,9 @@ struct SearchingView: View {
 
     var label: String {
         switch state.promptContext {
-        case .window(_, let title, _): return "Claude is reading \(title)…"
-        case .file(let name, _): return "Claude is reading \(name)…"
-        case nil: return "Claude is searching…"
+        case .window(_, let title, _): return String(format: NSLocalizedString("Claude is reading %@…", comment: ""), title)
+        case .file(let name, _): return String(format: NSLocalizedString("Claude is reading %@…", comment: ""), name)
+        case nil: return NSLocalizedString("Claude is searching…", comment: "")
         }
     }
 
@@ -1724,12 +1724,12 @@ struct IntegrationCardView: View {
     private var statusLabel: String {
         #if !APPSTORE
         if task.id == "integration_music" {
-            if appState.musicAutomationDenied { return "Automation not allowed" }
-            if appState.musicPlaying { return "Playing · \(MusicController.shared.trackTitle ?? "Unknown")" }
-            return "Not playing"
+            if appState.musicAutomationDenied { return NSLocalizedString("Automation not allowed", comment: "") }
+            if appState.musicPlaying { return String(format: NSLocalizedString("Playing · %@", comment: ""), MusicController.shared.trackTitle ?? "Unknown") }
+            return NSLocalizedString("Not playing", comment: "")
         }
         #endif
-        if PillCatalog.definition(for: task.id)?.comingSoon == true { return "Coming soon" }
+        if PillCatalog.definition(for: task.id)?.comingSoon == true { return NSLocalizedString("Coming soon", comment: "") }
         let svcErr = task.id == "integration_stripe" ? appState.stripeError
                    : task.id == "integration_calcom"  ? appState.calcomError
                    : nil
@@ -1737,12 +1737,12 @@ struct IntegrationCardView: View {
         let isHooks = task.id == "agent_gemini" || task.id == "agent_antigravity"
         let isAI    = ChatProvider(pillID: task.id) != nil
         if isConfigured {
-            if isHooks { return "Hooks installed" }
+            if isHooks { return NSLocalizedString("Hooks installed", comment: "") }
             if isAI {
                 let provider = ChatProvider(pillID: task.id)!
                 if provider.isLocal {
                     let model = provider == .ollama ? appState.ollamaChatModel : appState.lmstudioChatModel
-                    return "Connected · \(model)"
+                    return String(format: NSLocalizedString("Connected · %@", comment: ""), model)
                 }
                 let model: String
                 switch task.id {
@@ -1751,16 +1751,16 @@ struct IntegrationCardView: View {
                 case "ai_openai":    model = appState.openAIChatModel
                 default:             model = ""
                 }
-                return "Key configured · \(model)"
+                return String(format: NSLocalizedString("Key configured · %@", comment: ""), model)
             }
-            return "Connected · loading…"
+            return NSLocalizedString("Connected · loading…", comment: "")
         } else {
-            if isHooks { return "Hooks not installed" }
+            if isHooks { return NSLocalizedString("Hooks not installed", comment: "") }
             if isAI {
                 let provider = ChatProvider(pillID: task.id)!
-                return provider.isLocal ? "Not connected" : "Key not configured"
+                return provider.isLocal ? NSLocalizedString("Not connected", comment: "") : NSLocalizedString("Key not configured", comment: "")
             }
-            return "Key not configured"
+            return NSLocalizedString("Key not configured", comment: "")
         }
     }
 
@@ -2477,10 +2477,10 @@ struct GitHubDetailView: View {
 
     private var title: String {
         switch section {
-        case .myPRs:    return "My PRs"
-        case .toReview: return "To review"
-        case .mainCI:   return "Default branch CI"
-        case .activity: return "Activity"
+        case .myPRs:    return NSLocalizedString("My PRs", comment: "")
+        case .toReview: return NSLocalizedString("To review", comment: "")
+        case .mainCI:   return NSLocalizedString("Default branch CI", comment: "")
+        case .activity: return NSLocalizedString("Activity", comment: "")
         }
     }
 
@@ -2792,9 +2792,9 @@ private struct GitHubRepoCIRowView: View {
 
     private var ciStateWord: String? {
         switch repo.ci {
-        case .failure: return "failing"
-        case .pending: return "running"
-        case .success: return "passing"
+        case .failure: return NSLocalizedString("failing", comment: "")
+        case .pending: return NSLocalizedString("running", comment: "")
+        case .success: return NSLocalizedString("passing", comment: "")
         case .unknown: return nil
         }
     }
@@ -4518,7 +4518,7 @@ struct PrimaryButton: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 7) {
-                Text(title).font(.system(size: 12.5, weight: .medium))
+                Text(NSLocalizedString(title, comment: "")).font(.system(size: 12.5, weight: .medium))
                 if let k = kbd {
                     Text(k).font(.system(size: 10.5))
                         .padding(.horizontal, 4)
@@ -4547,7 +4547,7 @@ struct SecondaryButton: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: 7) {
-                Text(title).font(.system(size: 12.5, weight: .medium))
+                Text(NSLocalizedString(title, comment: "")).font(.system(size: 12.5, weight: .medium))
                 if let k = kbd {
                     Text(k).font(.system(size: 10.5))
                         .padding(.horizontal, 4)

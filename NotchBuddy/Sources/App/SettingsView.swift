@@ -146,7 +146,7 @@ struct SettingsView: View {
 
             // Detail panel
             VStack(alignment: .leading, spacing: 0) {
-                Text(sectionTitle)
+                Text(LocalizedStringKey(sectionTitle))
                     .font(.title2)
                     .fontWeight(.semibold)
                     .padding(.horizontal, 20)
@@ -161,7 +161,7 @@ struct SettingsView: View {
                 }
                 if !statusMessage.isEmpty {
                     Divider()
-                    Text(statusMessage)
+                    Text(LocalizedStringKey(statusMessage))
                         .font(.system(size: 12))
                         .foregroundColor(statusMessage.hasPrefix("❌") ? .red : .secondary)
                         .padding(.horizontal, 20)
@@ -320,7 +320,7 @@ struct SettingsView: View {
                     let catPills = PillCatalog.available.filter { $0.category == cat }
                     if !catPills.isEmpty {
                         Divider()
-                        Text(cat.title)
+                        Text(LocalizedStringKey(cat.title))
                             .font(.system(size: 11, weight: .semibold))
                             .foregroundColor(.secondary)
                         ForEach(catPills, id: \.id) { def in
@@ -656,7 +656,7 @@ struct SettingsView: View {
                 if state.ollamaServerURL.isEmpty {
                     TextField("http://127.0.0.1:11434", text: $ollamaURL)
                         .textFieldStyle(.roundedBorder)
-                    Button(connectingOllama ? "Connecting…" : "Connect") {
+                    Button(connectingOllama ? String(localized: "Connecting…") : String(localized: "Connect")) {
                         Task { await connectLocal(provider: .ollama) }
                     }
                     .buttonStyle(.borderedProminent)
@@ -691,7 +691,7 @@ struct SettingsView: View {
                 if state.lmstudioServerURL.isEmpty {
                     TextField("http://127.0.0.1:1234", text: $lmstudioURL)
                         .textFieldStyle(.roundedBorder)
-                    Button(connectingLMStudio ? "Connecting…" : "Connect") {
+                    Button(connectingLMStudio ? String(localized: "Connecting…") : String(localized: "Connect")) {
                         Task { await connectLocal(provider: .lmstudio) }
                     }
                     .buttonStyle(.borderedProminent)
@@ -1224,7 +1224,7 @@ struct SettingsView: View {
                     .foregroundColor(.secondary)
             } else {
                 if let h = hint {
-                    Text(h)
+                    Text(LocalizedStringKey(h))
                         .font(.system(size: 11))
                         .foregroundColor(.secondary)
                 }
@@ -1261,7 +1261,7 @@ struct SettingsSidebarRow: View {
 
     var body: some View {
         Label {
-            Text(title)
+            Text(LocalizedStringKey(title))
         } icon: {
             Image(systemName: icon)
                 .font(.system(size: 11, weight: .semibold))
@@ -1284,14 +1284,14 @@ struct IntegrationFilterRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 6) {
-                Text(label)
+                Text(LocalizedStringKey(label))
                     .font(.system(size: 11))
                     .foregroundColor(.secondary)
                 Spacer()
                 if loading {
                     ProgressView().scaleEffect(0.6)
                 } else {
-                    Button(items.isEmpty ? "Load list" : "Refresh") { onLoad() }
+                    Button(items.isEmpty ? String(localized: "Load list") : String(localized: "Refresh")) { onLoad() }
                         .buttonStyle(.bordered)
                         .controlSize(.mini)
                 }
@@ -1355,7 +1355,7 @@ struct ShortcutRecorderButton: View {
                 return nil
             }
         } label: {
-            Text(isRecording ? "Press keys…" : shortcutLabel)
+            Text(isRecording ? String(localized: "Press keys…") : shortcutLabel)
                 .font(.system(size: 11, design: .monospaced))
                 .padding(.horizontal, 8).padding(.vertical, 3)
                 .background(isRecording ? Color.accentColor.opacity(0.12) : Color(NSColor.controlBackgroundColor))

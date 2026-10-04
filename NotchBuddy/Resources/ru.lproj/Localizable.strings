@@ -224,3 +224,14 @@
 "%d h ago" = "%d ч назад";
 "in %d h %d" = "через %d ч %d мин";
 "in %d min" = "через %d мин";
+
+" is ready." = " готов.";
+"Loading…" = "Загрузка…";
+"AUTO" = "АВТО";
+"Ask Claude" = "Спросить Claude";
+"Always" = "Всегда";
+"Other…" = "Другое…";
+"Open in n8n" = "Открыть в n8n";
+"Open terminal" = "Открыть терминал";
+"OK" = "ОК";
+"Ask a question" = "Задать вопрос";

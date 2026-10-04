@@ -831,7 +831,7 @@ struct SettingsView: View {
             if on { try SMAppService.mainApp.register() }
             else  { try SMAppService.mainApp.unregister() }
         } catch {
-            statusMessage = "❌ Startup: \(error.localizedDescription)"
+            statusMessage = String(format: NSLocalizedString("❌ Startup: %@", comment: ""), error.localizedDescription)
             launchAtStartup = !on
         }
     }
@@ -841,7 +841,7 @@ struct SettingsView: View {
     #if APPSTORE
     private func pickClaudeFolder(prompt: String) -> URL? {
         let panel = NSOpenPanel()
-        panel.message = "Select your .claude folder (press ⇧⌘. to show hidden files)"
+        panel.message = NSLocalizedString("Select your .claude folder (press ⇧⌘. to show hidden files)", comment: "")
         panel.prompt = prompt
         panel.canChooseFiles = false
         panel.canChooseDirectories = true
@@ -852,7 +852,7 @@ struct SettingsView: View {
         panel.directoryURL = URL(fileURLWithPath: realHomePath)
         guard panel.runModal() == .OK, let url = panel.url else { return nil }
         guard url.lastPathComponent == ".claude" else {
-            statusMessage = "❌ Select the .claude folder (hidden, in your Home directory)."
+            statusMessage = NSLocalizedString("❌ Select the .claude folder (hidden, in your Home directory).", comment: "")
             return nil
         }
         return url
@@ -861,10 +861,10 @@ struct SettingsView: View {
     private func installHooksAppStore() {
         guard let claudeURL = pickClaudeFolder(prompt: "Select") else { return }
         let alert = NSAlert()
-        alert.messageText = "Install Coucou hooks in ~/.claude?"
-        alert.informativeText = "Will write:\n• ~/.claude/coucou/nb-hook\n• ~/.claude/settings.json (backup created first)"
-        alert.addButton(withTitle: "Install")
-        alert.addButton(withTitle: "Cancel")
+        alert.messageText = NSLocalizedString("Install Coucou hooks in ~/.claude?", comment: "")
+        alert.informativeText = NSLocalizedString("Will write:\n• ~/.claude/coucou/nb-hook\n• ~/.claude/settings.json (backup created first)", comment: "")
+        alert.addButton(withTitle: NSLocalizedString("Install", comment: ""))
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: ""))
         alert.alertStyle = .informational
         guard alert.runModal() == .alertFirstButtonReturn else { return }
         do {
@@ -904,7 +904,7 @@ struct SettingsView: View {
         let name = provider == .ollama ? "Ollama" : "LM Studio"
         switch result {
         case .success(let models) where models.isEmpty:
-            statusMessage = "No models yet — download one in \(name) first."
+            statusMessage = String(format: NSLocalizedString("No models yet — download one in %@ first.", comment: ""), name)
         case .success(let models):
             if provider == .ollama {
                 state.ollamaServerURL = normalised
@@ -917,9 +917,11 @@ struct SettingsView: View {
                 state.fetchedProviderModels[.lmstudio] = nil
                 state.providerModelFetchError[.lmstudio] = nil
             }
-            statusMessage = "✓ Connected · \(models.count) model\(models.count == 1 ? "" : "s")"
+            statusMessage = models.count == 1
+                ? String.localizedStringWithFormat(NSLocalizedString("✓ Connected · %d model", comment: ""), models.count)
+                : String.localizedStringWithFormat(NSLocalizedString("✓ Connected · %d models", comment: ""), models.count)
         case .failure:
-            statusMessage = "Couldn't reach \(name) at \(normalised). Is it running?"
+            statusMessage = String(format: NSLocalizedString("Couldn't reach %@ at %@. Is it running?", comment: ""), name, normalised)
         }
     }
 
@@ -941,7 +943,7 @@ struct SettingsView: View {
             pendingHookJSON = ""
             hookNeedsUpdate = false
         } catch {
-            statusMessage = "❌ Write error: \(error.localizedDescription)"
+            statusMessage = String(format: NSLocalizedString("❌ Write error: %@", comment: ""), error.localizedDescription)
         }
     }
 
@@ -975,8 +977,8 @@ struct SettingsView: View {
             pendingGeminiJSON = ""
             geminiHooksInstalled = geminiPendingInstall
             statusMessage = geminiPendingInstall
-                ? "✓ Gemini CLI hooks installed in ~/.gemini/settings.json"
-                : "✓ Gemini CLI hooks removed."
+                ? NSLocalizedString("✓ Gemini CLI hooks installed in ~/.gemini/settings.json", comment: "")
+                : NSLocalizedString("✓ Gemini CLI hooks removed.", comment: "")
         } catch {
             statusMessage = "❌ \(error.localizedDescription)"
         }
@@ -1002,8 +1004,8 @@ struct SettingsView: View {
             pendingAgyJSON = ""
             agyHooksInstalled = agyPendingInstall
             statusMessage = agyPendingInstall
-                ? "✓ Antigravity hooks installed in ~/.gemini/config/hooks.json"
-                : "✓ Antigravity hooks removed."
+                ? NSLocalizedString("✓ Antigravity hooks installed in ~/.gemini/config/hooks.json", comment: "")
+                : NSLocalizedString("✓ Antigravity hooks removed.", comment: "")
         } catch {
             statusMessage = "❌ \(error.localizedDescription)"
         }
@@ -1029,8 +1031,8 @@ struct SettingsView: View {
             pendingCodexJSON = ""
             codexHooksInstalled = codexPendingInstall
             statusMessage = codexPendingInstall
-                ? "✓ Codex hooks installed — run /hooks in Codex or open Hooks in the app's settings to trust them."
-                : "✓ Codex hooks removed."
+                ? NSLocalizedString("✓ Codex hooks installed — run /hooks in Codex or open Hooks in the app's settings to trust them.", comment: "")
+                : NSLocalizedString("✓ Codex hooks removed.", comment: "")
         } catch {
             statusMessage = "❌ \(error.localizedDescription)"
         }
@@ -1072,8 +1074,8 @@ struct SettingsView: View {
                 state.showPlanInNotch = false
             }
             statusMessage = statusLinePendingInstall
-                ? "✓ Status line installed."
-                : "✓ Status line removed."
+                ? NSLocalizedString("✓ Status line installed.", comment: "")
+                : NSLocalizedString("✓ Status line removed.", comment: "")
         } catch {
             planTogglePending = false
             statusMessage = "❌ \(error.localizedDescription)"
